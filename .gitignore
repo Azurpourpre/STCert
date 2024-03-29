@@ -1,0 +1,14 @@
+docs/*
+*.glob
+*.aux
+*.vo
+*.vos
+*.vok
+*.cache
+*.mli
+*.cmi
+*.cmo
+src/execute.ml
+src/lexer.ml
+src/parser.ml
+src/main
