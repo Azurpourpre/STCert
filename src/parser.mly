@@ -59,9 +59,9 @@ stmt:
     | IDENTIFIER ASSIGN expr EOL                                              { Assign ($1, $3) }
     | IF expr THEN stmt_list ELSE stmt_list END_IF EOL                        { If ($2, (Seq $4), (Seq $6)) }
     | CASE expr OF stmt_list END_CASE EOL                                     { Case ($2, $4) }
-    | FOR IDENTIFIER ASSIGN expr TO expr BY expr DO stmt_list END_FOR EOL     { Skip }
+    | FOR IDENTIFIER ASSIGN expr TO expr BY expr DO stmt_list END_FOR EOL     { Seq [ Assign ($2, $4) ; While (Neq (Var $2, $6), (Seq ($10 @ [Assign ($2, Add (Var $2, $8))])))] }
     | WHILE expr DO stmt_list END_WHILE EOL                                   { While ($2, (Seq $4)) }
-    | REPEAT stmt_list UNTIL expr END_REPEAT EOL                              { Seq [ While ($4, (Seq $2))] }
+    | REPEAT stmt_list UNTIL expr END_REPEAT EOL                              { Seq ($2 @ [ While ($4, (Seq $2))]) }
 ;
 stmt_list:
         stmt stmt_list  { $1 :: $2 }

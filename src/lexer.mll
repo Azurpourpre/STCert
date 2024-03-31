@@ -7,7 +7,7 @@ rule token = parse
     | ';' | ";\n"     {EOL}
     | eof             {EOF}
 
-    | ['0' - '9']+ as lxm       {INT lxm}
+    | '-'?['0' - '9']+ as lxm       {INT lxm}
     | "true" | "false" as lxm   {BOOL lxm}
     | '"'_*'"' as lxm           {STRING lxm}
     | '('                       {L_PARA}
