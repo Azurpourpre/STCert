@@ -3,30 +3,30 @@
 }
 
 rule token = parse 
-      [' ' '\t' '\n']  {token lexbuf} (* Skip blanks *)
-    | ';' | ";\n"     {EOL}
-    | eof             {EOF}
+      [' ' '\t' '\n']             {token lexbuf} (* Skip blanks *)
+    | ';' | ";\n"                 {EOL}
+    | eof                         {EOF}
 
-    | '-'?['0' - '9']+ as lxm       {INT lxm}
-    | "true" | "false" as lxm   {BOOL lxm}
-    | '"'_*'"' as lxm           {STRING lxm}
-    | '('                       {L_PARA}
-    | ')'                       {R_PARA}
-    | '+'                       {ADD}
-    | '-'                       {SUB}
-    | '*'                       {MUL}
-    | '/'                       {DIV}
-    | '%'                       {MOD}
-    | '^'                       {EXP}
-    | '&' | "&&" | "and"        {AND}
-    | '|' | "||" | "or"         {OR}
-    | '!' | "not"               {NOT}
-    | '=' | "=="                {EQ}
-    | '<'                       {LT}
-    | "<="                      {LTE}
-    | '>'                       {GT}
-    | ">="                      {GTE}
-    | "!="                      {NEQ}
+    | '-'?['0' - '9']+ as lxm     {INT lxm}
+    | "true" | "false" as lxm     {BOOL lxm}
+    | '"'_*'"' as lxm             {STRING lxm}
+    | '('                         {L_PARA}
+    | ')'                         {R_PARA}
+    | '+'                         {ADD}
+    | '-'                         {SUB}
+    | '*'                         {MUL}
+    | '/'                         {DIV}
+    | '%'                         {MOD}
+    | '^'                         {EXP}
+    | '&' | "&&" | "and"          {AND}
+    | '|' | "||" | "or"           {OR}
+    | '!' | "not"                 {NOT}
+    | '=' | "=="                  {EQ}
+    | '<'                         {LT}
+    | "<="                        {LTE}
+    | '>'                         {GT}
+    | ">="                        {GTE}
+    | "!="                        {NEQ}
 
     | ":="                        {ASSIGN}
     | "IF"                        {IF}
