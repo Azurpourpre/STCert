@@ -14,8 +14,20 @@ You should obtain a *main* executable file, which reads and execute code given i
 
 ## What's next
 
+- [ ] Program execution
+    - [x] Expressions
+    - [x] Variables
+    - [x] Conditions (If and Case)
+    - [x] Loops (While)
+    - [ ] Functions (for now, call possible, but each functions share the same environment)
+    - [ ] Arrays (missing element-wise assignement)
+    - [ ] Floats
+    - [ ] Message Sending / Recieving
+    - [ ] Unkown valued variable
 - [ ] Properties Proving
-- [ ] Adding Message sending / Recieving
+    - [x] Execution is equivalent to semantic
+    - [ ] Hoare Logic
+    - [ ] Deadlock freedom
 
 ## Directories and project structure
 
