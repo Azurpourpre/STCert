@@ -1,6 +1,9 @@
 %{
       open Execute
+      let instr_env (fname: string) = Skip
 %}
+
+%token PROGRAM END_PROGRAM
 
 (* expr *)
 %token <string> STRING INT BOOL IDENTIFIER
@@ -25,13 +28,18 @@
 %nonassoc EXP
 
 %start main
-%type <Execute.stmt> main
+%type <string -> Execute.stmt> main
+%type <string -> Execute.stmt> program
 %type <Execute.expr> expr
 %type <Execute.stmt list> stmt_list
 %type <Execute.stmt> stmt
 %%
 main:
-      stmt_list EOF  {Seq $1}
+      program {$1}
+;
+program:
+        PROGRAM IDENTIFIER stmt_list END_PROGRAM EOF {fun fname -> if (fname = $2) then (Seq $3) else (Skip)}
+      | PROGRAM IDENTIFIER stmt_list END_PROGRAM program {fun fname -> if (fname = $2) then (Seq $3) else ($5 fname)}
 ;
 expr:
       INT                   { Const (Int (int_of_string $1)) }
@@ -62,6 +70,7 @@ stmt:
     | FOR IDENTIFIER ASSIGN expr TO expr BY expr DO stmt_list END_FOR EOL     { Seq [ Assign ($2, $4) ; While (Neq (Var $2, $6), (Seq ($10 @ [Assign ($2, Add (Var $2, $8))])))] }
     | WHILE expr DO stmt_list END_WHILE EOL                                   { While ($2, (Seq $4)) }
     | REPEAT stmt_list UNTIL expr END_REPEAT EOL                              { Seq ($2 @ [ While ($4, (Seq $2))]) }
+    | IDENTIFIER L_PARA R_PARA EOL                                            { Call $1 }
 ;
 stmt_list:
         stmt stmt_list  { $1 :: $2 }
