@@ -7,11 +7,11 @@
 
 (* expr *)
 %token <string> STRING INT BOOL IDENTIFIER
-%token L_PARA R_PARA ADD SUB MUL DIV MOD EXP AND OR NOT EQ LT LTE GT GTE NEQ
+%token L_PARA R_PARA L_BRA R_BRA ADD SUB MUL DIV MOD EXP AND OR NOT EQ LT LTE GT GTE NEQ ARRAY
 
 (* stmt *)
 %token EOL EOF
-%token ASSIGN
+%token ASSIGN RANGE
 %token IF THEN ELSE END_IF CASE OF END_CASE
 %token FOR TO BY DO END_FOR WHILE END_WHILE REPEAT UNTIL END_REPEAT
 
@@ -42,25 +42,26 @@ program:
       | PROGRAM IDENTIFIER stmt_list END_PROGRAM program {fun fname -> if (fname = $2) then (Seq $3) else ($5 fname)}
 ;
 expr:
-      INT                   { Const (Int (int_of_string $1)) }
-    | BOOL                  { Const (Bool (bool_of_string $1)) }
-    | STRING                { Const (String $1); }
-    | L_PARA expr R_PARA    { $2 }
-    | IDENTIFIER            { Var $1 }
-    | expr ADD expr         { Add ($1, $3) }
-    | expr SUB expr         { Sub ($1, $3) }
-    | expr MUL expr         { Mul ($1, $3) }
-    | expr DIV expr         { Div ($1, $3) }
-    | expr MOD expr         { Mod ($1, $3) }
-    | expr EXP expr         { Exp ($1, $3) }
-    | expr AND expr         { And ($1, $3) }
-    | expr OR expr          { Or ($1, $3) }
-    | expr LT expr          { Lt0 ($1, $3) }
-    | expr LTE expr         { Lte ($1, $3) }
-    | expr GT expr          { Gt0 ($1, $3) }
-    | expr GTE expr         { Gte ($1, $3) }
-    | expr EQ expr          { Eq0 ($1, $3) }
-    | expr NEQ expr         { Neq ($1, $3) }
+      INT                         { Const (Int (int_of_string $1)) }
+    | BOOL                        { Const (Bool (bool_of_string $1)) }
+    | STRING                      { Const (String $1); }
+    | L_PARA expr R_PARA          { $2 }
+    | IDENTIFIER                  { Var $1 }
+    | expr ADD expr               { Add ($1, $3) }
+    | expr SUB expr               { Sub ($1, $3) }
+    | expr MUL expr               { Mul ($1, $3) }
+    | expr DIV expr               { Div ($1, $3) }
+    | expr MOD expr               { Mod ($1, $3) }
+    | expr EXP expr               { Exp ($1, $3) }
+    | expr AND expr               { And ($1, $3) }
+    | expr OR expr                { Or ($1, $3) }
+    | expr LT expr                { Lt0 ($1, $3) }
+    | expr LTE expr               { Lte ($1, $3) }
+    | expr GT expr                { Gt0 ($1, $3) }
+    | expr GTE expr               { Gte ($1, $3) }
+    | expr EQ expr                { Eq0 ($1, $3) }
+    | expr NEQ expr               { Neq ($1, $3) }
+    | expr L_BRA expr R_BRA       { Access ($1, $3) }
 ;
 stmt:
       EOL                                                                     { Skip }

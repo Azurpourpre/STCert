@@ -11,24 +11,25 @@ let dataTypes_toString (obj: Execute.dataTypes) : string =
 
 let rec expr_toString (obj: Execute.expr) : string = 
   match obj with
-  | Const dt    -> "Const " ^ (dataTypes_toString dt)
-  | Var v       -> "Var \"" ^ v ^ "\""
-  | Access (a, i)  -> (dataTypes_toString a) ^ "[" ^ (string_of_int i) ^ "]"
-  | Add (e1, e2)   -> "(" ^ (expr_toString e1) ^ ") + (" ^ (expr_toString e2) ^ ")"
-  | Sub (e1, e2)   -> "(" ^ (expr_toString e1) ^ ") - (" ^ (expr_toString e2) ^ ")"
-  | Mul (e1, e2)   -> "(" ^ (expr_toString e1) ^ ") * (" ^ (expr_toString e2) ^ ")"
-  | Div (e1, e2)   -> "(" ^ (expr_toString e1) ^ ") / (" ^ (expr_toString e2) ^ ")"
-  | Mod (e1, e2)   -> "(" ^ (expr_toString e1) ^ ") % (" ^ (expr_toString e2) ^ ")"
-  | Exp (e1, e2)   -> "exp(" ^ (expr_toString e1) ^ ", " ^ (expr_toString e2) ^ ")"
-  | And (e1, e2)   -> "(" ^ (expr_toString e1) ^ ") && (" ^ (expr_toString e2) ^ ")"
-  | Or (e1, e2)    -> "(" ^ (expr_toString e1) ^ ") || (" ^ (expr_toString e2) ^ ")"
-  | Not e       -> "~(" ^ (expr_toString e) ^ ")"
-  | Eq0 (e1, e2)   -> "(" ^ (expr_toString e1) ^ ") == (" ^ (expr_toString e2) ^ ")"
-  | Lt0 (e1, e2)   -> "(" ^ (expr_toString e1) ^ ") < (" ^ (expr_toString e2) ^ ")"
-  | Lte (e1, e2)   -> "(" ^ (expr_toString e1) ^ ") <= (" ^ (expr_toString e2) ^ ")"
-  | Gt0 (e1, e2)   -> "(" ^ (expr_toString e1) ^ ") > (" ^ (expr_toString e2) ^ ")"
-  | Gte (e1, e2)   -> "(" ^ (expr_toString e1) ^ ") >= (" ^ (expr_toString e2) ^ ")"
-  | Neq (e1, e2)   -> "(" ^ (expr_toString e1) ^ ") != (" ^ (expr_toString e2) ^ ")"
+  | Const dt          -> "Const " ^ (dataTypes_toString dt)
+  | Var v             -> "Var \"" ^ v ^ "\""
+  | Add (e1, e2)      -> "(" ^ (expr_toString e1) ^ ") + (" ^ (expr_toString e2) ^ ")"
+  | Sub (e1, e2)      -> "(" ^ (expr_toString e1) ^ ") - (" ^ (expr_toString e2) ^ ")"
+  | Mul (e1, e2)      -> "(" ^ (expr_toString e1) ^ ") * (" ^ (expr_toString e2) ^ ")"
+  | Div (e1, e2)      -> "(" ^ (expr_toString e1) ^ ") / (" ^ (expr_toString e2) ^ ")"
+  | Mod (e1, e2)      -> "(" ^ (expr_toString e1) ^ ") % (" ^ (expr_toString e2) ^ ")"
+  | Exp (e1, e2)      -> "exp(" ^ (expr_toString e1) ^ ", " ^ (expr_toString e2) ^ ")"
+  | And (e1, e2)      -> "(" ^ (expr_toString e1) ^ ") && (" ^ (expr_toString e2) ^ ")"
+  | Or (e1, e2)       -> "(" ^ (expr_toString e1) ^ ") || (" ^ (expr_toString e2) ^ ")"
+  | Not e             -> "~(" ^ (expr_toString e) ^ ")"
+  | Eq0 (e1, e2)      -> "(" ^ (expr_toString e1) ^ ") == (" ^ (expr_toString e2) ^ ")"
+  | Lt0 (e1, e2)      -> "(" ^ (expr_toString e1) ^ ") < (" ^ (expr_toString e2) ^ ")"
+  | Lte (e1, e2)      -> "(" ^ (expr_toString e1) ^ ") <= (" ^ (expr_toString e2) ^ ")"
+  | Gt0 (e1, e2)      -> "(" ^ (expr_toString e1) ^ ") > (" ^ (expr_toString e2) ^ ")"
+  | Gte (e1, e2)      -> "(" ^ (expr_toString e1) ^ ") >= (" ^ (expr_toString e2) ^ ")"
+  | Neq (e1, e2)      -> "(" ^ (expr_toString e1) ^ ") != (" ^ (expr_toString e2) ^ ")"
+  | Access (a, i)     -> (expr_toString a) ^ "[" ^ (expr_toString i) ^ "]"
+  | Modifiy (a, n, e) -> (expr_toString a) ^ "[" ^ (expr_toString n) ^ "] = " ^ (expr_toString e)
 
 let rec stmt_toString (obj: Execute.stmt) : string =
 match obj with

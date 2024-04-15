@@ -7,12 +7,12 @@ Inductive DataTypes : Set :=
 | Int      (z: Z)
 | Bool     (z: bool)
 | String   (z: string)
-| Array    (z: (nat * (list DataTypes)))
+| Float    (z: float)
+| Array    (z: (nat * nat * (nat -> DataTypes)))
 | Error
 .
 
 (*  
-    Float not implemented
     Date not implemented
     Enum not implemented
     Struct not implemented
@@ -28,8 +28,7 @@ Definition update_state (env: data_state) (x: string) (v: DataTypes) : data_stat
 (* Expressions *)
 Inductive expr : Set := 
 | Const (n: DataTypes)
-| Var   (v: string) 
-| Access (a: DataTypes) (n: nat)
+| Var   (v: string)
 
 | Add   (e1 e2: expr)
 | Sub   (e1 e2: expr)
@@ -48,6 +47,9 @@ Inductive expr : Set :=
 | Gt  (e1 e2: expr)
 | Gte (e1 e2: expr)
 | Neq (e1 e2: expr)
+
+| Access (a: expr) (n: expr)
+| Modifiy (a: expr) (n:expr) (e: expr)
 .
 
 Inductive stmt :=

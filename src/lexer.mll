@@ -13,6 +13,8 @@ rule token = parse
     | '"'_*'"' as lxm                    {STRING lxm}
     | '('                                {L_PARA}
     | ')'                                {R_PARA}
+    | '['                                {L_BRA}
+    | ']'                                {R_BRA}
     | '+'                                {ADD}
     | '-'                                {SUB}
     | '*'                                {MUL}
@@ -28,6 +30,7 @@ rule token = parse
     | '>'                                {GT}
     | ">="                               {GTE}
     | "!="                               {NEQ}
+    | ".."                               {RANGE}
       
     | ":="                               {ASSIGN}
     | "IF"                               {IF}
@@ -49,5 +52,6 @@ rule token = parse
     | "ENDREPEAT" | "END_REPEAT"         {END_REPEAT}
     | "PROGRAM"                          {PROGRAM}
     | "END_PROGRAM" | "ENDPROGRAM"       {END_PROGRAM}
+    | "ARRAY"                            {ARRAY}
 
     | ['a'-'z']['a'-'z' '0'-'9']* as lxm {IDENTIFIER lxm}
