@@ -5,6 +5,7 @@ let dataTypes_toString (obj: Execute.dataTypes) : string =
   | Int i -> "Int " ^ (string_of_int i)
   | Bool b -> if b then "Bool true" else "Bool false"
   | String s -> s
+  | Float f -> "Float " ^ (string_of_float f)
   | Array _ -> "Array printing not implemented (yet)"
   | Error -> "Error"
 

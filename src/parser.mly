@@ -6,7 +6,7 @@
 %token PROGRAM END_PROGRAM
 
 (* expr *)
-%token <string> STRING INT BOOL IDENTIFIER
+%token <string> STRING INT BOOL FLOAT IDENTIFIER
 %token L_PARA R_PARA L_BRA R_BRA ADD SUB MUL DIV MOD EXP AND OR NOT EQ LT LTE GT GTE NEQ ARRAY
 
 (* stmt *)
@@ -43,6 +43,7 @@ program:
 ;
 expr:
       INT                         { Const (Int (int_of_string $1)) }
+    | FLOAT                       { Const (Float (float_of_string $1)) }
     | BOOL                        { Const (Bool (bool_of_string $1)) }
     | STRING                      { Const (String $1); }
     | L_PARA expr R_PARA          { $2 }

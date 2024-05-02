@@ -9,6 +9,9 @@ FOR i := 10 TO 0 BY -1 DO
     f0 := oldf1;
 END_FOR;
 
+f3 := 5.2;
+f3 := f3 + 5;
+
 END_PROGRAM
 
 

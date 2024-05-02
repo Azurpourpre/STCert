@@ -3,34 +3,35 @@
 }
 
 rule token = parse 
-      [' ' '\t' '\n']                    {token lexbuf} (* Skip blanks *)
-    | "//"[^'\n']+                       {token lexbuf} (* C Comments *)
-    | ';' | ";\n"                        {EOL}
-    | eof                                {EOF}
+      [' ' '\t' '\n']                            {token lexbuf} (* Skip blanks *)
+    | "//"[^'\n']+                               {token lexbuf} (* C Comments *)
+    | ';' | ";\n"                                {EOL}
+    | eof                                        {EOF}
       
-    | '-'?['0' - '9']+ as lxm            {INT lxm}
-    | "true" | "false" as lxm            {BOOL lxm}
-    | '"'_*'"' as lxm                    {STRING lxm}
-    | '('                                {L_PARA}
-    | ')'                                {R_PARA}
-    | '['                                {L_BRA}
-    | ']'                                {R_BRA}
-    | '+'                                {ADD}
-    | '-'                                {SUB}
-    | '*'                                {MUL}
-    | '/'                                {DIV}
-    | '%'                                {MOD}
-    | '^'                                {EXP}
-    | '&' | "&&" | "and"                 {AND}
-    | '|' | "||" | "or"                  {OR}
-    | '!' | "not"                        {NOT}
-    | '=' | "=="                         {EQ}
-    | '<'                                {LT}
-    | "<="                               {LTE}
-    | '>'                                {GT}
-    | ">="                               {GTE}
-    | "!="                               {NEQ}
-    | ".."                               {RANGE}
+    | '-'?['0' - '9']+ as lxm                    {INT lxm}
+    | "true" | "false" as lxm                    {BOOL lxm}
+    | '"'_*'"' as lxm                            {STRING lxm}
+    | '-'?['0' - '9']+('.'|',')['0'-'9']* as lxm {FLOAT lxm}
+    | '('                                        {L_PARA}
+    | ')'                                        {R_PARA}
+    | '['                                        {L_BRA}
+    | ']'                                        {R_BRA}
+    | '+'                                        {ADD}
+    | '-'                                        {SUB}
+    | '*'                                        {MUL}
+    | '/'                                        {DIV}
+    | '%'                                        {MOD}
+    | '^'                                        {EXP}
+    | '&' | "&&" | "and"                         {AND}
+    | '|' | "||" | "or"                          {OR}
+    | '!' | "not"                                {NOT}
+    | '=' | "=="                                 {EQ}
+    | '<'                                        {LT}
+    | "<="                                       {LTE}
+    | '>'                                        {GT}
+    | ">="                                       {GTE}
+    | "!="                                       {NEQ}
+    | ".."                                       {RANGE}
       
     | ":="                               {ASSIGN}
     | "IF"                               {IF}
