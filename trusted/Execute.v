@@ -1,4 +1,4 @@
-Require Import Peano ZArith List String Lia.
+Require Import Peano ZArith List String Lia Bool.
 Import ListNotations.
 Require Import Syntax Evalexpr.
 
@@ -44,6 +44,13 @@ match wd, s with
     | _ => None
     end
 | S new_wd, Call n => execute (instr_env n) data_env instr_env new_wd
+| S new_wd, Modify a n e =>
+    match (data_env a), (eval_expr data_env n) with
+    | Array (si, ei, l), Int (Zpos i) => if ((si <=? Pos.to_nat(i)) && (Pos.to_nat(i) <=? ei)) then 
+        Some(update_state data_env a (Array (si, ei, update_array l (Pos.to_nat i) (eval_expr data_env e) ))) 
+      else None
+    | _, _ => None
+    end
 end.
 
 

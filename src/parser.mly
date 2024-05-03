@@ -46,6 +46,7 @@ expr:
     | FLOAT                       { Const (Float (float_of_string $1)) }
     | BOOL                        { Const (Bool (bool_of_string $1)) }
     | STRING                      { Const (String $1); }
+    | L_BRA INT RANGE INT R_BRA   { Const (Array ((int_of_string $2, int_of_string $4), (fun _ -> Error))) }
     | L_PARA expr R_PARA          { $2 }
     | IDENTIFIER                  { Var $1 }
     | expr ADD expr               { Add ($1, $3) }
@@ -73,6 +74,7 @@ stmt:
     | WHILE expr DO stmt_list END_WHILE EOL                                   { While ($2, (Seq $4)) }
     | REPEAT stmt_list UNTIL expr END_REPEAT EOL                              { Seq ($2 @ [ While ($4, (Seq $2))]) }
     | IDENTIFIER L_PARA R_PARA EOL                                            { Call $1 }
+    | IDENTIFIER L_BRA expr R_BRA ASSIGN expr                                 { Modify ($1, $3, $6) }
 ;
 stmt_list:
         stmt stmt_list  { $1 :: $2 }

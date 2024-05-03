@@ -109,9 +109,4 @@ match e with
     | Array (s, e ,l), Int (Zpos i) => if ((s <=? Pos.to_nat(i)) && (Pos.to_nat(i) <=? e)) then l (Pos.to_nat i) else Error
     | _, _ => Error
     end
-| Modifiy a n e =>
-    match (eval_expr env a), (eval_expr env n) with
-    | Array (si, ei, l), Int (Zpos i) => if ((si <=? Pos.to_nat(i)) && (Pos.to_nat(i) <=? ei)) then Array (si, ei, update_array l (Pos.to_nat i) (eval_expr env e) ) else Error
-    | _, _ => Error
-    end
 end.

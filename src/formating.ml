@@ -1,14 +1,20 @@
 open Execute
 
-let dataTypes_toString (obj: Execute.dataTypes) : string =
+let rec dataTypes_toString (obj: Execute.dataTypes) : string =
+  let rec string_of_Array (l, h, d: int * int * (int -> dataTypes)) : string =
+    if l < h then
+      (dataTypes_toString (d l)) ^ "; " ^ (string_of_Array ((l + 1), h, d))
+    else
+      (dataTypes_toString (d l))
+  in
+  
   match obj with
   | Int i -> "Int " ^ (string_of_int i)
   | Bool b -> if b then "Bool true" else "Bool false"
   | String s -> s
   | Float f -> "Float " ^ (string_of_float f)
-  | Array _ -> "Array printing not implemented (yet)"
+  | Array ((l, h), d) -> "Array[" ^ (string_of_int l) ^ ".." ^ (string_of_int h) ^ "] = [" ^ (string_of_Array (l, h, d)) ^ "]"
   | Error -> "Error"
-
 
 let rec expr_toString (obj: Execute.expr) : string = 
   match obj with
@@ -30,7 +36,6 @@ let rec expr_toString (obj: Execute.expr) : string =
   | Gte (e1, e2)      -> "(" ^ (expr_toString e1) ^ ") >= (" ^ (expr_toString e2) ^ ")"
   | Neq (e1, e2)      -> "(" ^ (expr_toString e1) ^ ") != (" ^ (expr_toString e2) ^ ")"
   | Access (a, i)     -> (expr_toString a) ^ "[" ^ (expr_toString i) ^ "]"
-  | Modifiy (a, n, e) -> (expr_toString a) ^ "[" ^ (expr_toString n) ^ "] = " ^ (expr_toString e)
 
 let rec stmt_toString (obj: Execute.stmt) : string =
 match obj with
@@ -49,3 +54,4 @@ match obj with
 | While (e, s) -> 
   "While (" ^ (expr_toString e) ^ ") {" ^ (stmt_toString s) ^ "}"
 | Call s -> "Call " ^ s
+| Modify (a, n, e) -> a ^ "[" ^ (expr_toString n) ^ "] = " ^ (expr_toString e)

@@ -2,15 +2,14 @@ PROGRAM fibo
 
 f0 := 1;
 f1 := 1;
+archive := [1 .. 10];
 
 FOR i := 10 TO 0 BY -1 DO
+    archive [ i ] := f1;
     oldf1 := f1;
     f1 := oldf1 + f0;
     f0 := oldf1;
 END_FOR;
-
-f3 := 5.2;
-f3 := f3 + 5;
 
 END_PROGRAM
 

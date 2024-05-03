@@ -49,7 +49,6 @@ Inductive expr : Set :=
 | Neq (e1 e2: expr)
 
 | Access (a: expr) (n: expr)
-| Modifiy (a: expr) (n:expr) (e: expr)
 .
 
 Inductive stmt :=
@@ -60,6 +59,7 @@ Inductive stmt :=
 | Case   (e: expr) (ls: list stmt)
 | While  (e: expr) (s: stmt)
 | Call   (n: string)
+| Modify (a: string) (n:expr) (e: expr)
 .
 
 Definition instr_state := string -> stmt.
