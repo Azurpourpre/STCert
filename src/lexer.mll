@@ -55,4 +55,4 @@ rule token = parse
     | "END_PROGRAM" | "ENDPROGRAM"       {END_PROGRAM}
     | "ARRAY"                            {ARRAY}
 
-    | ['a'-'z']['a'-'z' '0'-'9']* as lxm {IDENTIFIER lxm}
+    | ['a'-'z']['a'-'z' '0'-'9' '_']* as lxm {IDENTIFIER lxm}

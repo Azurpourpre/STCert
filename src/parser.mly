@@ -47,6 +47,7 @@ expr:
     | BOOL                        { Const (Bool (bool_of_string $1)) }
     | STRING                      { Const (String $1); }
     | L_BRA INT RANGE INT R_BRA   { Const (Array ((int_of_string $2, int_of_string $4), (fun _ -> Error))) }
+    | expr L_BRA expr R_BRA       { Access ($1, $3)}
     | L_PARA expr R_PARA          { $2 }
     | IDENTIFIER                  { Var $1 }
     | expr ADD expr               { Add ($1, $3) }
