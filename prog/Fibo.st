@@ -14,8 +14,8 @@ END_PROGRAM
 PROGRAM fibo_arr
 
 tab := [5 .. 15];
-tab[5] := 1;
-tab[6] := 1;
+tab[5] := 1.0;
+tab[6] := 1.0;
 FOR i := 5 TO 14 BY 1 DO
     tab[i + 2] := tab[i] + tab[i+1];
 END_FOR;

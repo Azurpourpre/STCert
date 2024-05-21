@@ -19,9 +19,9 @@ You should obtain a *main* executable file, which reads and execute code given i
     - [x] Variables
     - [x] Conditions (If and Case)
     - [x] Loops (While)
-    - [ ] Functions (for now, call possible, but each functions share the same environment)
-    - [ ] Arrays (missing element-wise assignement)
-    - [ ] Floats
+    - [x] Functions (for now, call possible, but each functions share the same environment)
+    - [x] Arrays
+    - [x] Floats (no operations across types like int and float ...)
     - [ ] Message Sending / Recieving
     - [ ] Unkown valued variable
 - [ ] Properties Proving
