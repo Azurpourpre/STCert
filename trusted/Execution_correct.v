@@ -1,4 +1,5 @@
-Require Import Peano ZArith List String Lia.
+Require Import Peano ZArith Znat List String Lia.
+Include Nat2Z.
 Import ListNotations.
 Require Import Syntax Semantic Execute Evalexpr.
 
@@ -65,6 +66,7 @@ Proof.
       + inversion H. apply H0.
       + inversion H. rewrite H2. apply H0.
     - apply IHwd in H. apply H.
+    - apply H.
 Qed.
 
 Lemma exec_more_wd:
@@ -76,7 +78,6 @@ Proof.
     - apply H.
     - apply weak_exec_more_wd. apply IHle.  
 Qed.
-
 
 Lemma execute_correct_l:
     forall s env env' ienv,
@@ -99,11 +100,11 @@ Proof.
       rewrite H. apply H1.
     - destruct IHstep.
       exists (S x). simpl.
-      rewrite H.
-      destruct z.
-      rewrite <- H1. apply H3.
-      rewrite <- H1. apply H3.
-      easy.
+      rewrite H. rewrite Nat2Z.id.
+      destruct (Z.of_nat n) eqn: nz_val.
+      + rewrite <- H0. apply H2.
+      + rewrite <- H0. apply H2.
+      + lia.
     - destruct IHstep1. destruct IHstep2.
       exists (S (max x x0)). simpl.
       rewrite H.
@@ -112,6 +113,14 @@ Proof.
     - exists 1. simpl. rewrite H. reflexivity.
     - destruct IHstep.
       exists (S x). simpl. apply H0.
+    - exists 1. simpl. rewrite H. rewrite H0.
+      destruct (Z.of_nat i) eqn: iz_val.
+      + rewrite <- inj_0 in iz_val. apply inj in iz_val.
+        rewrite iz_val in H1. rewrite <- Nat.leb_le in H1. rewrite H1. simpl. rewrite iz_val. reflexivity.
+      + rewrite <- positive_nat_Z in iz_val. apply inj in iz_val. rewrite <- iz_val.
+        rewrite <- Nat.leb_le in H1. rewrite H1. rewrite <- Nat.leb_le in H2. rewrite H2. simpl.
+        reflexivity.
+      + lia.
 Qed.
       
 
@@ -133,8 +142,8 @@ Proof.
     - destruct (eval_expr env e) eqn: e_val ; try easy.
       destruct (nth_error ls (Z.to_nat z)) eqn:nth_val ; try easy.
       destruct z eqn:z_val. 
-      eapply step_case. apply e_val. easy. rewrite nth_val. reflexivity. apply IHwd. apply H.
-      eapply step_case. apply e_val. easy. rewrite nth_val. reflexivity. apply IHwd. apply H.
+      eapply step_case. rewrite inj_0. apply e_val. simpl in nth_val. simpl. rewrite nth_val. reflexivity. apply IHwd. apply H.
+      eapply step_case. rewrite (positive_nat_Z p). apply e_val. simpl in nth_val. rewrite nth_val. reflexivity. apply IHwd. apply H.
       easy.
       destruct z ; easy.
     - destruct (eval_expr env e) eqn:e_val ; try easy.
@@ -143,6 +152,16 @@ Proof.
         eapply step_while_true. apply e_val. apply IHwd. apply H. apply IHwd. apply H0.
       + inversion H. subst. apply step_while_false. apply e_val.
     - apply step_call. apply IHwd. apply H.
+    - destruct (env a) eqn: a_val ; try easy.
+      destruct z as (p, l). destruct p as (si, ei).
+      destruct (eval_expr env n) eqn: n_val ; try easy.
+      destruct z.
+      + destruct (si <=? 0) eqn: si_sign; simpl in H.
+        inversion H. apply step_modify. apply n_val. apply a_val. apply Nat.leb_le. apply si_sign. lia.   
+        easy.
+      + destruct (si <=? Pos.to_nat p) eqn: si_sign ; destruct (Pos.to_nat p <=? ei) eqn: ei_sign ; simpl in H ; try easy.
+        inversion H. apply step_modify. rewrite positive_nat_Z. apply n_val. apply a_val. apply Nat.leb_le. apply si_sign. apply Nat.leb_le. apply ei_sign.
+      + easy. 
 Qed.
 
 Theorem execute_correct:
@@ -154,3 +173,5 @@ Proof.
     - intros. destruct H. eapply execute_correct_r. apply H.
     - apply execute_correct_l.
 Qed.
+
+Print Assumptions execute_correct.

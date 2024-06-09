@@ -14,7 +14,7 @@ You should obtain a *main* executable file, which reads and execute code given i
 
 ## What's next
 
-- [ ] Program execution
+- Program execution
     - [x] Expressions
     - [x] Variables
     - [x] Conditions (If and Case)
@@ -24,7 +24,7 @@ You should obtain a *main* executable file, which reads and execute code given i
     - [x] Floats (no operations across types like int and float ...)
     - [ ] Message Sending / Recieving
     - [ ] Unkown valued variable
-- [ ] Properties Proving
+- Properties Proving
     - [x] Execution is equivalent to semantic
     - [ ] Hoare Logic
     - [ ] Deadlock freedom

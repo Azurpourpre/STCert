@@ -49,6 +49,9 @@ match wd, s with
     | Array (si, ei, l), Int (Zpos i) => if ((si <=? Pos.to_nat(i)) && (Pos.to_nat(i) <=? ei)) then 
         Some(update_state data_env a (Array (si, ei, update_array l (Pos.to_nat i) (eval_expr data_env e) ))) 
       else None
+    | Array (si, ei, l), Int 0 => if ((si <=? 0) && (0 <=? ei)) then
+        Some(update_state data_env a (Array (si, ei, update_array l 0 (eval_expr data_env e))))
+      else None
     | _, _ => None
     end
 end.

@@ -1,0 +1,9 @@
+Axioms:
+PrimFloat.sub : PrimFloat.float -> PrimFloat.float -> PrimFloat.float
+PrimFloat.mul : PrimFloat.float -> PrimFloat.float -> PrimFloat.float
+PrimFloat.ltb : PrimFloat.float -> PrimFloat.float -> bool
+PrimFloat.leb : PrimFloat.float -> PrimFloat.float -> bool
+PrimFloat.float : Set
+PrimFloat.eqb : PrimFloat.float -> PrimFloat.float -> bool
+PrimFloat.div : PrimFloat.float -> PrimFloat.float -> PrimFloat.float
+PrimFloat.add : PrimFloat.float -> PrimFloat.float -> PrimFloat.float
